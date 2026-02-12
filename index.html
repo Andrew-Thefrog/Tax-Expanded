@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaxCalc - Clean & Ad-Free</title>
+    <link rel="icon" type="image/x-icon" href="assets/icon.png">
+    <style>
+        /* CSS Variables for easy theme switching */
+        :root {
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #05047E;
+            --text-label: #475569;
+            --input-bg: #f1f5f9;
+            --input-border: #e2e8f0;
+            --btn-bg: #05047E;
+            --btn-hover: #03025e;
+            --results-bg: #f0fdf4;
+            --results-border: #dcfce7;
+            --results-text: #166534;
+            --sub-text: #4a5568;
+        }
+
+        /* Dark Mode Overrides */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-color: #0f172a;
+                --card-bg: #1e293b;
+                --text-main: #38bdf8;
+                --text-label: #94a3b8;
+                --input-bg: #334155;
+                --input-border: #475569;
+                --btn-bg: #38bdf8;
+                --btn-hover: #7dd3fc;
+                --results-bg: #064e3b;
+                --results-border: #065f46;
+                --results-text: #4ade80;
+                --sub-text: #cbd5e1;
+            }
+        }
+
+        @font-face {
+            font-family: 'TaxCalcFont';
+            src: url('assets/TaxCalc-Font.TTF') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'TaxCalcFont', 'Times New Roman', serif;
+            background: var(--bg-color); 
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            transition: background 0.3s ease;
+        }
+
+        #subtotal, #totalTax, #grandTotal {
+            font-family: 'TaxCalcFont', monospace;
+        }
+
+        .calculator {
+            background: var(--card-bg);
+            border-radius: 24px;
+            padding: 40px;
+            max-width: 420px;
+            width: 100%;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--input-border);
+            transition: all 0.3s ease;
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--text-main);
+            margin-bottom: 32px;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .input-group {
+            margin-bottom: 24px;
+        }
+
+        label {
+            display: block;
+            color: var(--text-label); 
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        input {
+            width: 100%;
+            padding: 16px 20px;
+            background: var(--input-bg);
+            border: 2px solid var(--input-border);
+            border-radius: 12px;
+            font-size: 18px;
+            color: var(--sub-text);
+            transition: all 0.2s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--text-main);
+            background: var(--card-bg);
+            box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.1);
+        }
+
+        .button {
+            width: 100%;
+            padding: 18px;
+            background: var(--btn-bg);
+            color: #ffffff; 
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        /* Dark mode button text color adjustment */
+        @media (prefers-color-scheme: dark) {
+            .button { color: #0f172a; }
+        }
+
+        .button:hover {
+            background: var(--btn-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .results {
+            margin-top: 24px;
+            padding: 20px;
+            background: var(--results-bg); 
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid var(--results-border);
+        }
+
+        .result-number {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--results-text); 
+            margin: 8px 0;
+        }
+
+        .state-tax { 
+            background: var(--input-bg); 
+            color: var(--text-label); 
+            font-size: 24px;
+            border-radius: 8px;
+            padding: 4px;
+        }
+
+        .label-sub {
+            font-size: 14px; 
+            color: var(--sub-text);
+        }
+
+        /* Responsive Mobile Layout */
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+                align-items: flex-start; /* Better for scrolling on small screens */
+            }
+            .calculator {
+                padding: 24px;
+                border-radius: 16px;
+                margin-top: 20px;
+            }
+            h1 {
+                font-size: 24px;
+                margin-bottom: 24px;
+            }
+            input, .button {
+                font-size: 16px;
+                padding: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <h1>TaxCalc</h1>
+        
+        <div class="input-group" id="input-group">
+            <label>Subtotal (pre-tax)</label>
+            <input type="text" id="subtotal" placeholder="$1,299" inputmode="decimal">
+        </div>
+        
+        <button class="button" onclick="calculateTax()">Calculate Tax</button>
+        
+        <div class="results" id="results" style="display: none;">
+            <div style="margin-top: 16px;">
+                <div class="result-number state-tax" id="totalTax"></div>
+                <div class="label-sub">Total Tax</div>
+            </div>
+            <div style="margin-top: 16px;">
+                <div class="result-number" id="grandTotal"></div>
+                <div class="label-sub">Grand Total</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    document.getElementById("subtotal").addEventListener("input", function() {
+        this.value = this.value.replace(/[^0-9.]/g, '');
+    });
+
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+            calculateTax();
+        }
+        else if (event.key === 'Escape') {
+            document.getElementById('results').style.display = 'none';
+            document.getElementById('subtotal').value = '';
+            document.getElementById('subtotal').focus();
+        }
+    });
+
+    function calculateTax() {
+        const subtotalInput = document.getElementById("subtotal");
+        const subtotal = parseFloat(subtotalInput.value);
+        const tax_rate = 0.085;
+        const total_rate = 1.085;
+        const total_tax = document.getElementById("totalTax");
+        const grand_total = document.getElementById("grandTotal");
+        const results = document.getElementById("results");
+        const subtotalArea = document.getElementById("input-group");
+        
+        if (isNaN(subtotal) || subtotal <= 0) {
+            subtotalArea.style.transition = "transform 0.08s ease";
+            subtotalArea.style.transform = "rotateZ(0deg)";
+            setTimeout(() => subtotalArea.style.transform = "rotateZ(-5deg)", 80);
+            setTimeout(() => subtotalArea.style.transform = "rotateZ(5deg)", 160);
+            setTimeout(() => subtotalArea.style.transform = "rotateZ(0deg)", 240);
+            return;
+        }
+
+        total_tax.textContent = "$" + (subtotal * tax_rate).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+        grand_total.textContent = "$" + (subtotal * total_rate).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+        
+        results.style.display = "block";
+        results.style.opacity = "0";
+        results.style.transform = "scale(0.95)";
+        setTimeout(() => {
+            results.style.transition = "all 0.3s ease";
+            results.style.opacity = "1";
+            results.style.transform = "scale(1)";
+        }, 10);
+    }
+    </script>
+</body>
+</html>
