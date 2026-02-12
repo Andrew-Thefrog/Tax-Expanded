@@ -2,7 +2,7 @@
 
 **Clean, ad-free Oklahoma sales tax calculator.** Instant 8.5% tax on any subtotal with pro UX.
 
-[![TaxCalc](https://via.placeholder.com/800x400/05047E/ffffff?text=TaxCalc+%7C+taxcalc.thebiggestfrog.workers.dev)](https://TaxCalc.thebiggestfrog.workers.dev)
+[![TaxCalc](TaxCalc.png)](https://TaxCalc.thebiggestfrog.workers.dev)
 
 ## Features
 
