@@ -1,8 +1,8 @@
-# TaxCalc 🚀
+# Tax Expanded 🚀
 
 **Clean, ad-free Oklahoma sales tax calculator.** Instant 8.5% tax on any subtotal with pro UX.
 
-[![TaxCalc](TaxCalc.png)](https://TaxCalc.thebiggestfrog.workers.dev)
+[![Tax Expanded](TaxCalc.png)](https://taxexpanded.thebiggestfrog.workers.dev)
 
 ## Features
 
@@ -17,14 +17,14 @@
 
 ## Live Demo
 
-**[taxcalc.thebiggestfrog.workers.dev](https://TaxCalc.thebiggestfrog.workers.dev)**
+**[taxexpanded.thebiggestfrog.workers.dev](https://taxexpanded.thebiggestfrog.workers.dev)**
 
 $999.99 → Enter → $85.00 tax → $1,084.99 total
 Escape → Clean slate
 
 ## Structure
 
-TaxCalc/
+TaxExpanded/
 ├── index.html ← Single file app
 └── assets/
 ├── icon.png ← TCC favicon
@@ -46,7 +46,7 @@ TaxCalc/
 
 - Vanilla HTML/CSS/JS (zero dependencies)
 - CSS custom properties (dark mode)
-- `@font-face` custom TaxCalc font
+- `@font-face` custom Tax Expanded font
 - Cloudflare Workers hosting
 
 ## Born From
@@ -59,4 +59,4 @@ MIT - Fork, deploy, use anywhere. 💰
 
 ---
 
-**From bloated carts to surgical purchases—TaxCalc keeps your numbers honest. Hosted at taxcalc.thebiggestfrog.workers.dev**
+**From bloated carts to surgical purchases—TaxCalc keeps your numbers honest. Hosted at taxexpanded.thebiggestfrog.workers.dev**
